@@ -336,6 +336,9 @@ public class IngresarAnimalView extends javax.swing.JFrame {
                 try {
                     Persistencia.addAnimal(Edad, Peso, NumeroEspecie, NumeroSector, Double.parseDouble(ValorFijoField5.getText()), PaisField3.getText(), ISOField4.getText());
                     System.out.println("Animal Agregado");
+                    
+                    AptitudLabel8.setText("Apto");
+                    
                     Estado=-1;
                     jLabel9.setVisible(false);
                     ValorFijoField5.setVisible(false);
@@ -343,11 +346,8 @@ public class IngresarAnimalView extends javax.swing.JFrame {
                     System.out.println(ex);
                 }             
             }
-            else{
-                javax.swing.JOptionPane.showMessageDialog(null, "Al ser herbívoro necesitas ingresar la cantidad de comida fija.");
             }
-            }
-                AptitudLabel8.setText("Apto");
+                
             
             }else{
                 AptitudLabel8.setText("No apto");}
