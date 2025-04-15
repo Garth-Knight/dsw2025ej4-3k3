@@ -10,6 +10,7 @@ import java.util.InvalidPropertiesFormatException;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+import views.MenuPrincipalView;
 
 
 /**
@@ -270,7 +271,9 @@ public class IngresarAnimalView extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+       this.dispose();
+       MenuPrincipalView menu = new MenuPrincipalView();
+       menu.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ValorFijoField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorFijoField5ActionPerformed

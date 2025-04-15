@@ -12,7 +12,7 @@ public class Program {
         Persistencia.inicializar();
         IngresarAnimalView view1 = new IngresarAnimalView();
         ListarAnimalesView view = new ListarAnimalesView();
-        view.setVisible(true);
-        view1.setVisible(true);
+        MenuPrincipalView menu = new MenuPrincipalView();
+        menu.setVisible(true);
     }
 }
