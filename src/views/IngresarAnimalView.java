@@ -296,6 +296,7 @@ public class IngresarAnimalView extends javax.swing.JFrame {
             Edad = Integer.parseInt(EdadField1.getText());
             Pais = PaisField3.getText();
             
+            
             for(int i=0 ; i<4 ; i++)
             {
                 if(especiesConvert[i].equals(jComboBox1.getSelectedItem()))
@@ -321,6 +322,9 @@ public class IngresarAnimalView extends javax.swing.JFrame {
                 try {
                     Persistencia.addAnimal(Edad, Peso, NumeroEspecie, NumeroSector, 0, PaisField3.getText(), ISOField4.getText());
                     System.out.println("Animal creado");
+                    
+                    AptitudLabel8.setText("Apto");
+                    
                 } catch (InvalidPropertiesFormatException ex) {
                     System.out.println(ex);
                 }
