@@ -4,6 +4,13 @@
  */
 package views;
 
+import data.Persistencia;
+import domain.Especie;
+import java.util.InvalidPropertiesFormatException;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+
 
 /**
  *
@@ -19,8 +26,40 @@ public class IngresarAnimalView extends javax.swing.JFrame {
         filtro(EdadField1, "NUMERO");
         filtro(PesoField2, "NUMERO");
         filtro(PaisField3, "TEXTO");
+        filtro(ISOField4,"TEXTO");
+        filtro(ValorFijoField5,"NUMERO");
+        
     }
 
+        private void filtro (javax.swing.JTextField campotexto, String opcion){
+    ((javax.swing.text.AbstractDocument) campotexto.getDocument()).setDocumentFilter(new javax.swing.text.DocumentFilter() {
+    
+    @Override
+    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+        
+        switch (opcion){
+            case "TEXTO" -> {
+                if (text.matches("[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+            case "NUMERO" -> {
+                if (text.matches("\\d+")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+                    
+        }
+        
+    }
+});
+    }
+    
+    
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,7 +75,7 @@ public class IngresarAnimalView extends javax.swing.JFrame {
         EdadField1 = new javax.swing.JTextField();
         PesoField2 = new javax.swing.JTextField();
         PaisField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        ISOField4 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -44,10 +83,11 @@ public class IngresarAnimalView extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        TipojLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        ValorFijoField5 = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
+        AptitudLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,7 +113,7 @@ public class IngresarAnimalView extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Animales ", "Jirafa", "Leon", "Elefante", "Tigre" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Animales ", "Jirafa", "León", "Elefante", "Tigre" }));
         jComboBox1.setToolTipText("");
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,17 +133,19 @@ public class IngresarAnimalView extends javax.swing.JFrame {
 
         jLabel7.setText("Alimentacion:");
 
-        jLabel8.setText("#####");
+        TipojLabel8.setText("#####");
 
         jLabel9.setText("Valor Fijo");
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        ValorFijoField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                ValorFijoField5ActionPerformed(evt);
             }
         });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sectores", "Sector 1 ", "Sector 2", "Sector 3", "Sector 4", " " }));
+
+        AptitudLabel8.setText("Aptitud");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,7 +166,7 @@ public class IngresarAnimalView extends javax.swing.JFrame {
                             .addComponent(PesoField2)
                             .addComponent(EdadField1)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField4))
+                            .addComponent(ISOField4))
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6)
@@ -132,11 +174,11 @@ public class IngresarAnimalView extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel8))
+                                .addComponent(TipojLabel8))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(ValorFijoField5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -144,8 +186,12 @@ public class IngresarAnimalView extends javax.swing.JFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(78, 78, 78))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(AptitudLabel8)
+                        .addGap(20, 20, 20)))
+                .addGap(54, 54, 54))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,7 +212,7 @@ public class IngresarAnimalView extends javax.swing.JFrame {
                     .addComponent(PesoField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8))
+                    .addComponent(TipojLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PaisField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,13 +220,15 @@ public class IngresarAnimalView extends javax.swing.JFrame {
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ISOField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ValorFijoField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addGap(84, 84, 84))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(AptitudLabel8)
+                .addGap(56, 56, 56))
         );
 
         pack();
@@ -190,22 +238,112 @@ public class IngresarAnimalView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_EdadField1ActionPerformed
 
+    
+    String alimentacion = new String();
+    
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+        String especie = (String) jComboBox1.getSelectedItem();
+        
+        if("Seleccionar especie...".equals(especie))
+        {
+            jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija una especie..."}));
+        }
+        else if("Jirafa".equals(especie) || "Elefante".equals(especie))
+        {
+            jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sectores" ,"Sector 1", "Sector 3"}));
+            alimentacion = "Herbívoro";
+        }
+        else if("León".equals(especie) || "Tigre".equals(especie))
+        {
+            jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sectores" ,"Sector 2", "Sector 4"}));
+            alimentacion = "Carnívoro";
+        }
+        TipojLabel8.setText(alimentacion);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void ValorFijoField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorFijoField5ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_ValorFijoField5ActionPerformed
 
+    
+        double Peso;
+        int Edad;
+        String Pais;
+        int NumeroEspecie=-1;
+        int NumeroSector;
+        int Estado=-1;
+        String[] especiesConvert= {"León", "Jirafa", "Tigre", "Elefante"};
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        
+        if((PesoField2.getText()!="") & (EdadField1.getText()!="") & (PaisField3.getText()!="") & (jComboBox1.getSelectedItem()!="Animales") & (jComboBox2.getSelectedItem()!="Sectores"))
+        {
+            
+            AptitudLabel8.setText("Control");
+            Peso = Double.parseDouble(PesoField2.getText());
+            Edad = Integer.parseInt(EdadField1.getText());
+            Pais = PaisField3.getText();
+            
+            for(int i=0 ; i<4 ; i++)
+            {
+                if(especiesConvert[i].equals(jComboBox1.getSelectedItem()))
+                {
+                    NumeroEspecie=i;
+                    break;
+                }
+            }
+            
+            if(NumeroEspecie==-1){
+            System.out.println("Especie no encontrada");
+            }
+            else
+            {
+            
+            String auxiliar = (String) jComboBox2.getSelectedItem();
+            NumeroSector = Character.getNumericValue(auxiliar.charAt(7))-1;
+            
+            Especie esp = Persistencia.getEspecie(NumeroEspecie);
+            
+            if(Estado==-1){
+            if(esp.getTipoAlimentacion().esCarnivoro()){
+                try {
+                    Persistencia.addAnimal(Edad, Peso, NumeroEspecie, NumeroSector, 0, PaisField3.getText(), ISOField4.getText());
+                    System.out.println("Animal creado");
+                } catch (InvalidPropertiesFormatException ex) {
+                    System.out.println(ex);
+                }
+                }else if(esp.getTipoAlimentacion().esHerbivoro()){
+                    
+                    javax.swing.JOptionPane.showMessageDialog(null, "ES HERBIVORO INGRESE UN VALOR FIJO.");
+                    jLabel7.setVisible(true);
+                    ValorFijoField5.setVisible(true);
+                    Estado=1;
+                    
+                }
+            }else if(!ValorFijoField5.getText().equals("")){
+                try {
+                    Persistencia.addAnimal(Edad, Peso, NumeroEspecie, NumeroSector, Double.parseDouble(ValorFijoField5.getText()), PaisField3.getText(), ISOField4.getText());
+                    System.out.println("Animal Agregado");
+                    Estado=-1;
+                    jLabel9.setVisible(false);
+                    ValorFijoField5.setVisible(false);
+                } catch (InvalidPropertiesFormatException ex) {
+                    System.out.println(ex);
+                }             
+            }
+            else{
+                javax.swing.JOptionPane.showMessageDialog(null, "Al ser herbívoro necesitas ingresar la cantidad de comida fija.");
+            }
+            }
+            }else{
+                AptitudLabel8.setText("No apto");}
+        
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
@@ -243,9 +381,13 @@ public class IngresarAnimalView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AptitudLabel8;
     private javax.swing.JTextField EdadField1;
+    private javax.swing.JTextField ISOField4;
     private javax.swing.JTextField PaisField3;
     private javax.swing.JTextField PesoField2;
+    private javax.swing.JLabel TipojLabel8;
+    private javax.swing.JTextField ValorFijoField5;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -257,9 +399,6 @@ public class IngresarAnimalView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

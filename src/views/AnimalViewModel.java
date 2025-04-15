@@ -4,7 +4,7 @@ package views;
 import domain.Carnivoro;
 import domain.Herbivoro;
 import domain.Mamifero;
-
+import domain.Pais;
 
 public class AnimalViewModel{
 
@@ -14,6 +14,7 @@ public class AnimalViewModel{
     private double peso;
     private double valorFijo;
     private double porcentaje;
+    private Pais pais;
 
     public AnimalViewModel(Mamifero animal) {
         if(animal == null) return;
@@ -23,6 +24,7 @@ public class AnimalViewModel{
         peso = animal.getPeso();
         valorFijo = animal instanceof Herbivoro ? ((Herbivoro) animal).getValorFijo() : 0;
         porcentaje = animal instanceof Carnivoro ? animal.getEspecie().getPorcentajePesoCarnivoro() : 0;
+        pais = animal.getPais();
     }
 
     public String getEspecie() {
@@ -47,5 +49,13 @@ public class AnimalViewModel{
     
     public double getPorcentaje(){
         return porcentaje;
+    }
+    
+    public String getPais(){
+        return pais.getNombre();
+    }
+    
+    public String getISO(){
+        return pais.getIso2();
     }
 }
