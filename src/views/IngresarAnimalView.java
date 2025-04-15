@@ -88,6 +88,7 @@ public class IngresarAnimalView extends javax.swing.JFrame {
         ValorFijoField5 = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
         AptitudLabel8 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,7 +146,9 @@ public class IngresarAnimalView extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sectores", "Sector 1 ", "Sector 2", "Sector 3", "Sector 4", " " }));
 
-        AptitudLabel8.setText("Aptitud");
+        AptitudLabel8.setText("####");
+
+        jLabel8.setText("Validez:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,11 +190,14 @@ public class IngresarAnimalView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(54, 54, 54))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(AptitudLabel8)
-                        .addGap(20, 20, 20)))
-                .addGap(54, 54, 54))
+                        .addGap(58, 58, 58))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +233,9 @@ public class IngresarAnimalView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(AptitudLabel8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AptitudLabel8)
+                    .addComponent(jLabel8))
                 .addGap(56, 56, 56))
         );
 
@@ -328,6 +336,9 @@ public class IngresarAnimalView extends javax.swing.JFrame {
                 try {
                     Persistencia.addAnimal(Edad, Peso, NumeroEspecie, NumeroSector, Double.parseDouble(ValorFijoField5.getText()), PaisField3.getText(), ISOField4.getText());
                     System.out.println("Animal Agregado");
+                    
+                    AptitudLabel8.setText("Apto");
+                    
                     Estado=-1;
                     jLabel9.setVisible(false);
                     ValorFijoField5.setVisible(false);
@@ -335,10 +346,9 @@ public class IngresarAnimalView extends javax.swing.JFrame {
                     System.out.println(ex);
                 }             
             }
-            else{
-                javax.swing.JOptionPane.showMessageDialog(null, "Al ser herbívoro necesitas ingresar la cantidad de comida fija.");
             }
-            }
+                
+            
             }else{
                 AptitudLabel8.setText("No apto");}
         
@@ -399,6 +409,7 @@ public class IngresarAnimalView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     // End of variables declaration//GEN-END:variables
 }
